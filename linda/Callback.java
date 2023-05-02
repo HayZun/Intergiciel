@@ -7,7 +7,7 @@ public interface Callback {
 
     /** Callback when a tuple appears. 
      * See Linda.eventRegister for details.
-     * 
+     * gofifo
      * @param t the new tuple
      */
     void call(Tuple t);
