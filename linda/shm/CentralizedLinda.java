@@ -9,20 +9,11 @@ import linda.Tuple;
 
 
 
-
-
 /** Shared memory implementation of Linda. */
 public class CentralizedLinda implements Linda {
 
     // create list of tuples
     private ArrayList<Tuple> tuples;
-
-    // create tuple space server
-    //private TupleSpace TSServer;
-
-    // create host and port
-    //private String host = "localhost";
-    //private int port = 4000;
 
     public CentralizedLinda() {
         //private Tuple motifStringInteger = new Tuple(String.class, Integer.class);
@@ -60,6 +51,7 @@ public class CentralizedLinda implements Linda {
             } catch (InterruptedException e) {
                 // handle the exception
             }
+            return take(template);
         }
     }
     
@@ -81,6 +73,7 @@ public class CentralizedLinda implements Linda {
                 // handle the exception
 
             }
+            return read(template);
         }
     }
     @Override
@@ -147,7 +140,8 @@ public class CentralizedLinda implements Linda {
         return tuplesToReturn;
     }
 
-     /** Registers a callback which will be called when a tuple matching the template appears.
+    @Override
+    /** Registers a callback which will be called when a tuple matching the template appears.
      * If the mode is Take, the found tuple is removed from the tuplespace.
      * The callback is fired once. It may re-register itself if necessary.
      * If timing is immediate, the callback may immediately fire if a matching tuple is already present; if timing is future, current tuples are ignored.
@@ -162,7 +156,6 @@ public class CentralizedLinda implements Linda {
      */
     public void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
         // verify if a tuple matching the template appears
-        while (true) {
             if (timing == eventTiming.IMMEDIATE) {
                 // if mode is future, verify if a tuple matching the template appears
                 for (Tuple tuple : tuples) {
@@ -184,13 +177,11 @@ public class CentralizedLinda implements Linda {
                     // handle the exception
                 }
             }
-        }
     }
 
     @Override
-    public void debug(String prefix) {
-        for (Tuple tuple : tuples ) {
-            System.out.println(prefix + tuple.toString());
-        }
+    public synchronized void debug(String prefix) {
+        // TODO Auto-generated method stub
+        System.out.println(prefix + " " + tuples.toString());
     }
 }
