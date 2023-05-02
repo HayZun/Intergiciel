@@ -9,11 +9,20 @@ import linda.Tuple;
 
 
 
+
+
 /** Shared memory implementation of Linda. */
 public class CentralizedLinda implements Linda {
 
     // create list of tuples
     private ArrayList<Tuple> tuples;
+
+    // create tuple space server
+    //private TupleSpace TSServer;
+
+    // create host and port
+    //private String host = "localhost";
+    //private int port = 4000;
 
     public CentralizedLinda() {
         //private Tuple motifStringInteger = new Tuple(String.class, Integer.class);
@@ -138,14 +147,50 @@ public class CentralizedLinda implements Linda {
         return tuplesToReturn;
     }
 
-    @Override
+     /** Registers a callback which will be called when a tuple matching the template appears.
+     * If the mode is Take, the found tuple is removed from the tuplespace.
+     * The callback is fired once. It may re-register itself if necessary.
+     * If timing is immediate, the callback may immediately fire if a matching tuple is already present; if timing is future, current tuples are ignored.
+     * Beware: a callback should never block as the calling context may be the one of the writer (see also {@link AsynchronousCallback} class).
+     * Callbacks are not ordered: if more than one may be fired, the chosen one is arbitrary.
+     * Beware of loop with a READ/IMMEDIATE re-registering callback !
+     *
+     * @param mode read or take mode.
+     * @param timing (potentially) immediate or only future firing.
+     * @param template the filtering template.
+     * @param callback the callback to call if a matching tuple appears.
+     */
     public void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eventRegister'");
+        // verify if a tuple matching the template appears
+        while (true) {
+            if (timing == eventTiming.IMMEDIATE) {
+                // if mode is future, verify if a tuple matching the template appears
+                for (Tuple tuple : tuples) {
+                    if (tuple.matches(template)) {
+                        // if mode is take, remove tuple from tuples list
+                        if (mode == eventMode.TAKE) {   
+                            tuples.remove(tuple);
+                        }
+                        // call the callback
+                        callback.call(tuple);
+                    }
+                }
+            }
+            else {
+                // if mode is future, wait for a write operation
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    // handle the exception
+                }
+            }
+        }
     }
 
     @Override
     public void debug(String prefix) {
-        System.out.println(prefix + ": " + tuples.toString());
+        for (Tuple tuple : tuples ) {
+            System.out.println(prefix + tuple.toString());
+        }
     }
 }
