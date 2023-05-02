@@ -9,10 +9,12 @@ import linda.Tuple;
 /** Shared memory implementation of Linda. */
 public class CentralizedLinda implements Linda {
 
-    private Tuple motifStringInteger = new Tuple(String.class, Integer.class);
-    private Tuple motifIntegerString = new Tuple(Integer.class, String.class);
-	
+    
     public CentralizedLinda() {
+        private Tuple motifStringInteger = new Tuple(String.class, Integer.class);
+        //TSServer.eventRegister(TupleSpace.WRITE, templateDRAW, new WhiteboardModel.EventDraw());
+        private Tuple motifIntegerString = new Tuple(Integer.class, String.class);
+        TSServer = new TupleSpace("Whiteboard", host, port);
 
     }
 
