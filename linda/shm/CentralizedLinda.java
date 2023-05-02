@@ -8,6 +8,7 @@ import linda.Tuple;
 public class CentralizedLinda implements Linda {
 	
     public CentralizedLinda() {
+
     }
 
     // TO BE COMPLETED
