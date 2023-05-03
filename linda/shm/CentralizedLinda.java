@@ -2,6 +2,7 @@ package linda.shm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import linda.Callback;
 import linda.Linda;
@@ -12,24 +13,47 @@ import linda.Tuple;
 /** Shared memory implementation of Linda. */
 public class CentralizedLinda implements Linda {
 
+    //create Hasmap Template and callback 
+    private HashMap<Tuple, Callback> templateCallbackTake;
+    private HashMap<Tuple, Callback> templateCallbackRead;
+
+
     // create list of tuples
     private ArrayList<Tuple> tuples;
 
     public CentralizedLinda() {
-        //private Tuple motifStringInteger = new Tuple(String.class, Integer.class);
-        //TSServer.eventRegister(TupleSpace.WRITE, templateDRAW, new WhiteboardModel.EventDraw());
-        //private Tuple motifIntegerString = new Tuple(Integer.class, String.class);
-        //TSServer = new TupleSpace("Whiteboard", host, port);
+
         
         //init tuples list
         tuples = new ArrayList<Tuple>();
+        //init templateCallbackTake
+        templateCallbackTake = new HashMap<Tuple, Callback>();
+        //init templateCallbackRead
+        templateCallbackRead = new HashMap<Tuple, Callback>();
     }
 
     @Override
     public synchronized void write(Tuple t) {
-        // TO BE COMPLETED
-        tuples.add(t);
+        boolean take = false;
+        // for HashMap<Tuple, Callback> templateCallbackRead;
+        for (Tuple template : templateCallbackRead.keySet()) {
+            if (t.matches(template)) {
+                templateCallbackRead.get(template).call(t);
+                templateCallbackRead.remove(template);
+            }
+        }
+        for (Tuple template : templateCallbackTake.keySet()) {
+            if (t.matches(template)) {
+                take = true;
+                templateCallbackTake.get(template).call(t);
+                templateCallbackTake.remove(template);
+            }
+        }
 
+
+        if (take == false) {
+            tuples.add(t);
+        }
         // notify all threads waiting for a tuple
         notifyAll();
     }
@@ -154,34 +178,42 @@ public class CentralizedLinda implements Linda {
      * @param template the filtering template.
      * @param callback the callback to call if a matching tuple appears.
      */
-    public void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
-        // verify if a tuple matching the template appears
-            if (timing == eventTiming.IMMEDIATE) {
-                // if mode is future, verify if a tuple matching the template appears
-                for (Tuple tuple : tuples) {
-                    if (tuple.matches(template)) {
-                        // if mode is take, remove tuple from tuples list
-                        if (mode == eventMode.TAKE) {   
-                            tuples.remove(tuple);
-                        }
-                        // call the callback
-                        callback.call(tuple);
-                    }
-                }
+    public synchronized void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
+         // Créer un nouveau thread pour le callback
+        if (timing == eventTiming.IMMEDIATE) {
+                        Tuple motifTuple = null;
+                            
+                                if (mode == eventMode.TAKE) {
+                                    motifTuple = tryTake(template);
+                                    if (motifTuple != null) {
+                                        callback.call(motifTuple);
+                                    } else {
+                                        templateCallbackTake.put(template, callback);
+                                    }
+                                } else {
+                                    motifTuple = tryRead(template);
+                                    if (motifTuple != null) {
+                                        callback.call(motifTuple);
+                                    } else {
+                                        templateCallbackRead.put(template, callback);
+                                    }
+                                }                               
+                                   
+                        
+                   
+        } else {
+            // if timing is future, current tuples are ignored.
+            if (mode == eventMode.TAKE) {
+                templateCallbackTake.put(template, callback);
+            } else {
+                templateCallbackRead.put(template, callback);
             }
-            else {
-                // if mode is future, wait for a write operation
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    // handle the exception
-                }
-            }
+         }
     }
 
     @Override
     public synchronized void debug(String prefix) {
-        // TODO Auto-generated method stub
         System.out.println(prefix + " " + tuples.toString());
+
     }
 }
