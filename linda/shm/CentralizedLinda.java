@@ -3,7 +3,7 @@ package linda.shm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-
+import java.util.List;
 import linda.Callback;
 import linda.Linda;
 import linda.Tuple;
@@ -22,8 +22,6 @@ public class CentralizedLinda implements Linda {
     private ArrayList<Tuple> tuples;
 
     public CentralizedLinda() {
-
-        
         //init tuples list
         tuples = new ArrayList<Tuple>();
         //init templateCallbackTake
@@ -34,29 +32,31 @@ public class CentralizedLinda implements Linda {
 
     @Override
     public synchronized void write(Tuple t) {
-        boolean take = false;
-        // for HashMap<Tuple, Callback> templateCallbackRead;
-        for (Tuple template : templateCallbackRead.keySet()) {
-            if (t.matches(template)) {
-                templateCallbackRead.get(template).call(t);
-                templateCallbackRead.remove(template);
+        tuples.add(t);
+        // create a copy of the tuples list
+        List<Tuple> tuplesCopy = new ArrayList<>(tuples);
+        // for each tuple in the copy
+        tuplesCopy.forEach(tuple -> {
+            boolean take = false;
+            // foreach tuples, if matches template and template is a take template remove tuple from tuples list
+            for (Tuple template : templateCallbackTake.keySet()) {
+                if (tuple.matches(template) && !take) {
+                    tuples.removeIf(t1->t1.matches(template));
+                    templateCallbackTake.get(template).call(tuple);
+                    templateCallbackTake.remove(template);
+                    take = true;
+                }
             }
-        }
-        for (Tuple template : templateCallbackTake.keySet()) {
-            if (t.matches(template)) {
-                take = true;
-                templateCallbackTake.get(template).call(t);
-                templateCallbackTake.remove(template);
+            for (Tuple template : templateCallbackRead.keySet()) {
+                if (tuple.matches(template)) {
+                    templateCallbackRead.get(template).call(tuple);
+                    templateCallbackRead.remove(template);
+                }
             }
-        }
-
-
-        if (take == false) {
-            tuples.add(t);
-        }
-        // notify all threads waiting for a tuple
+        });
         notifyAll();
     }
+    
 
     public synchronized Tuple take(Tuple template) {
         // search template in tuples list
@@ -179,25 +179,25 @@ public class CentralizedLinda implements Linda {
      * @param callback the callback to call if a matching tuple appears.
      */
     public synchronized void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
-         // Créer un nouveau thread pour le callback
+        //sleep five seconds
+
         if (timing == eventTiming.IMMEDIATE) {
-                        Tuple motifTuple = null;
-                            
-                                if (mode == eventMode.TAKE) {
-                                    motifTuple = tryTake(template);
-                                    if (motifTuple != null) {
-                                        callback.call(motifTuple);
-                                    } else {
-                                        templateCallbackTake.put(template, callback);
-                                    }
-                                } else {
-                                    motifTuple = tryRead(template);
-                                    if (motifTuple != null) {
-                                        callback.call(motifTuple);
-                                    } else {
-                                        templateCallbackRead.put(template, callback);
-                                    }
-                                }                               
+            Tuple motifTuple = null;
+                if (mode == eventMode.TAKE) {
+                    motifTuple = tryTake(template);
+                    if (motifTuple != null) {
+                        callback.call(motifTuple);
+                    } else {
+                        templateCallbackTake.put(template, callback);
+                    }
+                } else {
+                    motifTuple = tryRead(template);
+                    if (motifTuple != null) {
+                        callback.call(motifTuple);
+                    } else {
+                        templateCallbackRead.put(template, callback);
+                    }
+                }                               
                                    
                         
                    

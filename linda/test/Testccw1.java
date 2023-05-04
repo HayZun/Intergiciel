@@ -5,10 +5,28 @@ import linda.Linda.eventMode;
 import linda.Linda.eventTiming;
 
 public class Testccw1 {
+
+    private static Linda linda;
+    private static Tuple cbmotif;
+
+    private static class MyCallback implements Callback {
+        public void call(Tuple t) {
+            System.out.println("CB got "+t);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+            System.out.println("CB done with "+t);
+        }
+    }
+
     public static void main(String[] a) throws Exception {
         final Linda linda = new linda.shm.CentralizedLinda();
-        linda.write(new Tuple(4, 5));
-        System.out.println("");
-        System.out.println("Ok, I have found Linda.");
+        cbmotif = new Tuple(Integer.class, String.class);
+        linda.write(new Tuple(4, "foo"));
+        linda.eventRegister(eventMode.TAKE, eventTiming.FUTURE, cbmotif, new MyCallback());
+        linda.eventRegister(eventMode.TAKE, eventTiming.FUTURE, cbmotif, new MyCallback());
+        linda.write(new Tuple(4, "foo"));
+        linda.debug("(2)");
     }
 }
