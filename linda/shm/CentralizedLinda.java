@@ -15,8 +15,7 @@ public class CentralizedLinda implements Linda {
 
     //create Hasmap Template and callback 
     private HashMap<Tuple, Callback> templateCallbackTake;
-    private HashMap<Tuple, Callback> templateCallbackRead;
-
+    private HashMap<Tuple, ArrayList<Callback>> templateCallbackRead;
 
     // create list of tuples
     private ArrayList<Tuple> tuples;
@@ -26,8 +25,10 @@ public class CentralizedLinda implements Linda {
         tuples = new ArrayList<Tuple>();
         //init templateCallbackTake
         templateCallbackTake = new HashMap<Tuple, Callback>();
-        //init templateCallbackRead
-        templateCallbackRead = new HashMap<Tuple, Callback>();
+        //init listRead
+        //init templateCallbackRead with listRead
+        templateCallbackRead = new HashMap<Tuple, ArrayList<Callback>>();
+        
     }
 
     @Override
@@ -41,7 +42,7 @@ public class CentralizedLinda implements Linda {
             // foreach tuples, if matches template and template is a take template remove tuple from tuples list
             for (Tuple template : templateCallbackTake.keySet()) {
                 if (tuple.matches(template) && !take) {
-                    tuples.removeIf(t1->t1.matches(template));
+                    tuples.remove(tuple);
                     templateCallbackTake.get(template).call(tuple);
                     templateCallbackTake.remove(template);
                     take = true;
@@ -49,8 +50,8 @@ public class CentralizedLinda implements Linda {
             }
             for (Tuple template : templateCallbackRead.keySet()) {
                 if (tuple.matches(template)) {
-                    templateCallbackRead.get(template).call(tuple);
-                    templateCallbackRead.remove(template);
+                    templateCallbackRead.get(template).get(0).call(tuple);
+                    templateCallbackRead.get(template).remove(0);
                 }
             }
         });
@@ -179,8 +180,6 @@ public class CentralizedLinda implements Linda {
      * @param callback the callback to call if a matching tuple appears.
      */
     public synchronized void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
-        //sleep five seconds
-
         if (timing == eventTiming.IMMEDIATE) {
             Tuple motifTuple = null;
                 if (mode == eventMode.TAKE) {
@@ -195,18 +194,34 @@ public class CentralizedLinda implements Linda {
                     if (motifTuple != null) {
                         callback.call(motifTuple);
                     } else {
-                        templateCallbackRead.put(template, callback);
+                        //add tuple and callback to templateCallbackRead
+                        ArrayList<Callback> listRead;
+                        if (templateCallbackRead.containsKey(template)) {
+                            listRead = templateCallbackRead.get(template);
+                            listRead.add(callback);
+                            templateCallbackRead.remove(template);
+                        } else {
+                            listRead = new ArrayList<Callback>();
+                            listRead.add(callback);
+                        }
+                        templateCallbackRead.put(template, listRead);
                     }
                 }                               
-                                   
-                        
-                   
         } else {
             // if timing is future, current tuples are ignored.
             if (mode == eventMode.TAKE) {
                 templateCallbackTake.put(template, callback);
             } else {
-                templateCallbackRead.put(template, callback);
+                ArrayList<Callback> listRead;
+                        if (templateCallbackRead.containsKey(template)) {
+                            listRead = templateCallbackRead.get(template);
+                            listRead.add(callback);
+                            templateCallbackRead.remove(template);
+                        } else {
+                            listRead = new ArrayList<Callback>();
+                            listRead.add(callback);
+                        }
+                        templateCallbackRead.put(template, listRead);
             }
          }
     }
