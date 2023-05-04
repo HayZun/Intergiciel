@@ -1,4 +1,4 @@
-package linda.shm;
+package linda.server;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,9 @@ import linda.Tuple;
 
 
 /** Shared memory implementation of Linda. */
-public class CentralizedLinda implements Linda {
+public class LindaServer implements Linda  {
+
+    private LindaServerMain server;
 
     //create Hasmap Template and callback 
     private HashMap<Tuple, ArrayList<Callback>> templateCallbackTake;
@@ -20,7 +22,8 @@ public class CentralizedLinda implements Linda {
     // create list of tuples
     private ArrayList<Tuple> tuples;
 
-    public CentralizedLinda() {
+    public LindaServer() {
+
         //init tuples list
         tuples = new ArrayList<Tuple>();
         //init templateCallbackTake
@@ -28,6 +31,9 @@ public class CentralizedLinda implements Linda {
         //init listRead
         //init templateCallbackRead with listRead
         templateCallbackRead = new HashMap<Tuple, ArrayList<Callback>>();
+
+        //init server
+        server = new LindaServerMain();
         
     }
 

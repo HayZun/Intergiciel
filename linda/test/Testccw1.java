@@ -23,10 +23,12 @@ public class Testccw1 {
     public static void main(String[] a) throws Exception {
         final Linda linda = new linda.shm.CentralizedLinda();
         cbmotif = new Tuple(Integer.class, String.class);
-        linda.write(new Tuple(4, "foo"));
         linda.eventRegister(eventMode.TAKE, eventTiming.FUTURE, cbmotif, new MyCallback());
         linda.eventRegister(eventMode.TAKE, eventTiming.FUTURE, cbmotif, new MyCallback());
+        linda.eventRegister(eventMode.TAKE, eventTiming.FUTURE, cbmotif, new MyCallback());
         linda.write(new Tuple(4, "foo"));
+
+
         linda.debug("(2)");
     }
 }
