@@ -1,5 +1,6 @@
 package linda.server;
 
+import java.rmi.Naming;
 import java.util.Collection;
 
 import linda.Callback;
@@ -15,7 +16,7 @@ public class LindaClient implements Linda {
      *  @param serverURI the URI of the server, e.g. "rmi://localhost:4000/LindaServer" or "//localhost:4000/LindaServer".
      */
     public LindaClient(String serverURI) {
-        
+        LindaService linda = (LindaService) Naming.lookup(serverURI);
     }
 
     @Override
