@@ -1,12 +1,15 @@
 package linda.test;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 import linda.*;
 
 public class BasicTest2 {
 
-    public static void main(String[] a) {
+    public static void main(String[] a) throws RemoteException, NotBoundException {
         final Linda linda = new linda.shm.CentralizedLinda();
-        // final Linda linda = new linda.server.LindaClient("rmi://localhost:4000/MonServeur");
+        //final Linda linda = new linda.server.LindaClient("rmi://localhost:4000/LindaServer");
                 
         for (int i = 1; i <= 3; i++) {
             final int j = i;
