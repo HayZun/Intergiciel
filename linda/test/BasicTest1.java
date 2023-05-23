@@ -4,7 +4,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import linda.*;
-import linda.server.LindaService;
 
 public class BasicTest1 {
 
@@ -52,7 +51,6 @@ public class BasicTest1 {
                 linda.write(t3);
                                 
                 linda.debug("(2)");
-
             }
         }.start();
                 

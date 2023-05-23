@@ -13,12 +13,38 @@ import linda.Tuple;
 /** Shared memory implementation of Linda. */
 public class CentralizedLinda implements Linda {
 
-    //create Hasmap Template and callback 
-    private HashMap<Tuple, ArrayList<Callback>> templateCallbackTake;
+    // HashMap de template et de callback pour Take
+private HashMap<Tuple, ArrayList<Callback>> templateCallbackTake;
+
+public HashMap<Tuple, ArrayList<Callback>> getTemplateCallbackTake() {
+    return templateCallbackTake;
+}
+
+public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> templateCallbackTake) {
+    this.templateCallbackTake = templateCallbackTake;
+}
+
+    // HashMap de template et de callback pour Read
     private HashMap<Tuple, ArrayList<Callback>> templateCallbackRead;
 
-    // create list of tuples
+    public HashMap<Tuple, ArrayList<Callback>> getTemplateCallbackRead() {
+        return templateCallbackRead;
+    }
+
+    public void setTemplateCallbackRead(HashMap<Tuple, ArrayList<Callback>> templateCallbackRead) {
+        this.templateCallbackRead = templateCallbackRead;
+    }
+
+    // Liste de tuples
     private ArrayList<Tuple> tuples;
+
+    public ArrayList<Tuple> getTuples() {
+        return tuples;
+    }
+
+    public void setTuples(ArrayList<Tuple> tuples) {
+        this.tuples = tuples;
+    }
 
     public CentralizedLinda() {
         //init tuples list
@@ -28,7 +54,6 @@ public class CentralizedLinda implements Linda {
         //init listRead
         //init templateCallbackRead with listRead
         templateCallbackRead = new HashMap<Tuple, ArrayList<Callback>>();
-        
     }
 
     @Override
@@ -259,6 +284,8 @@ public class CentralizedLinda implements Linda {
     @Override
     public synchronized void debug(String prefix) {
         System.out.println(prefix + " " + tuples.toString());
-
     }
+
+    //accessors
+
 }
