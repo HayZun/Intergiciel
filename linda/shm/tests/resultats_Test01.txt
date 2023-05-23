@@ -1,0 +1,320 @@
+        DEBUT TEST 01 : rrrw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) [[ 4 "foo" ]]
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 1
+---------------------------------
+
+        DEBUT TEST 02 : wrrr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) [[ 4 "foo" ]]
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 2
+---------------------------------
+
+        DEBUT TEST 03 : rwrr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) [[ 4 "foo" ]]
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 3
+---------------------------------
+
+        DEBUT TEST 04 : rrwr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) [[ 4 "foo" ]]
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 4
+---------------------------------
+
+        DEBUT TEST 05 : trrw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 5
+---------------------------------
+
+        DEBUT TEST 06 : wtrr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 6
+---------------------------------
+
+Résultat attendu : 1 success
+        DEBUT TEST 07 : twrr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 7
+---------------------------------
+
+        DEBUT TEST 08 : trwr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 8
+---------------------------------
+
+        DEBUT TEST 09 : rtrw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 9
+---------------------------------
+
+        DEBUT TEST 10 : wrtr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 10
+---------------------------------
+
+        DEBUT TEST 11 : rwtr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 11
+---------------------------------
+
+        DEBUT TEST 12 : rtwr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 12
+---------------------------------
+
+        DEBUT TEST 13 : rrtw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 13
+---------------------------------
+
+        DEBUT TEST 14 : wrrt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 14
+---------------------------------
+
+        DEBUT TEST 15 : rwrt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 15
+---------------------------------
+
+        DEBUT TEST 16 : rrwt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 16
+---------------------------------
+
+        DEBUT TEST 17 : rttw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 17
+---------------------------------
+
+        DEBUT TEST 18 : wrtt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 18
+---------------------------------
+
+        DEBUT TEST 19 : rwtt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 19
+---------------------------------
+
+        DEBUT TEST 20 : rtwt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 20
+---------------------------------
+
+        DEBUT TEST 21 : trtw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 21
+---------------------------------
+
+        DEBUT TEST 22 : wtrt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 22
+---------------------------------
+
+        DEBUT TEST 23 : twrt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 23
+---------------------------------
+
+        DEBUT TEST 24 : trwt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 24
+---------------------------------
+
+        DEBUT TEST 25 : ttrw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 25
+---------------------------------
+
+        DEBUT TEST 26 : wttr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 26
+---------------------------------
+
+        DEBUT TEST 27 : twtr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 27
+---------------------------------
+
+        DEBUT TEST 28 : ttwr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 28
+---------------------------------
+
+        DEBUT TEST 29 : tttw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 29
+---------------------------------
+
+        DEBUT TEST 30 : wttt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 30
+---------------------------------
+
+        DEBUT TEST 31 : twtt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 31
+---------------------------------
+
+        DEBUT TEST 32 : ttwt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 32
+---------------------------------
+
+Nombre de tests réussis : 32/32
