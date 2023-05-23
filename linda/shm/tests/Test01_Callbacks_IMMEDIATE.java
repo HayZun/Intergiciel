@@ -1,14 +1,13 @@
 package linda.shm.tests;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import linda.*;
 import linda.Tuple;
 import linda.Linda.eventMode;
 import linda.Linda.eventTiming;
 
-
+// Utilisation du mode IMMEDIATE uniquement
 // Tests de callbacks, toutes les combinaisons possibles à 3 callbacks et 1 write :
 // 3 read :          rrrw, wrrr, rwrr, rrwr
 // 2 read + 1 take : trrw, wtrr, twrr, trwr 
