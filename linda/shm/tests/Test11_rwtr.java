@@ -1,12 +1,11 @@
-package linda.test;
+package linda.shm.tests;
 
 import linda.*;
 import linda.Linda.eventMode;
 import linda.Linda.eventTiming;
 
-public class Testccw1 {
+public class Test11_rwtr {
 
-    private static Linda linda;
     private static Tuple cbmotif;
     private static int nb_callbacks = 0;
 
@@ -31,14 +30,16 @@ public class Testccw1 {
 
     public static void main(String[] a) throws Exception {
         final Linda linda = new linda.shm.CentralizedLinda();
-        nb_callbacks = 0;
         cbmotif = new Tuple(Integer.class, String.class);
-        linda.eventRegister(eventMode.TAKE, eventTiming.FUTURE, cbmotif, new MyCallback());
-        linda.eventRegister(eventMode.TAKE, eventTiming.FUTURE, cbmotif, new MyCallback());
-        linda.eventRegister(eventMode.TAKE, eventTiming.FUTURE, cbmotif, new MyCallback());
+        linda.eventRegister(eventMode.READ, eventTiming.IMMEDIATE, cbmotif, new MyCallback());
         linda.write(new Tuple(4, "foo"));
-
+        linda.eventRegister(eventMode.TAKE, eventTiming.IMMEDIATE, cbmotif, new MyCallback());
+        linda.eventRegister(eventMode.READ, eventTiming.IMMEDIATE, cbmotif, new MyCallback());
 
         linda.debug("(2)");
+        System.out.println("Résultat attendu : 2 success");
+        System.out.println("        FIN TEST 11");
+        System.out.println("---------------------------------");
+        System.out.println();
     }
 }
