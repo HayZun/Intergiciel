@@ -10,7 +10,7 @@ public class BasicTest1 {
     public static void main(String[] a) throws RemoteException, NotBoundException {
                 
         //final Linda linda = new linda.shm.CentralizedLinda();
-        final Linda linda = new linda.server.LindaClient("rmi://localhost:4000/LindaServer");
+        final Linda linda = new linda.server.LindaClient("//localhost:4000/");
                 
         new Thread() {
             public void run() {

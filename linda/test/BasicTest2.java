@@ -8,8 +8,8 @@ import linda.*;
 public class BasicTest2 {
 
     public static void main(String[] a) throws RemoteException, NotBoundException {
-        final Linda linda = new linda.shm.CentralizedLinda();
-        //final Linda linda = new linda.server.LindaClient("rmi://localhost:4000/LindaServer");
+        //final Linda linda = new linda.shm.CentralizedLinda();
+        final Linda linda = new linda.server.LindaClient("//localhost:4000/");
                 
         for (int i = 1; i <= 3; i++) {
             final int j = i;
