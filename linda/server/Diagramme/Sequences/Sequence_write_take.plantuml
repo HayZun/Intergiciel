@@ -1,0 +1,91 @@
+@startuml
+
+actor Client
+actor Thread1
+actor Thread2
+actor RMI
+participant LindaClient
+participant LindaServer
+participant LindaRemote
+participant "LindaCentralized" as Linda
+
+group Démarrage du serveur RMI
+
+RMI -> LindaServer: Démarre le serveur
+
+activate LindaServer
+
+LindaServer -> LindaServer: createRegistry(4000)
+
+LindaServer -> LindaRemote: Crée LindaRemoteImpl()
+
+LindaRemote --> LindaServer:
+
+LindaServer -> LindaServer: registry.bind("LindaServer", LindaRemoteImpl);
+
+LindaServer --> RMI: Affiche "// system ready //"
+
+end
+
+Client -> Client: main()
+
+group Connexion du client
+
+Client -> LindaClient : new linda.server("//localhost:4000/");
+LindaClient -> LindaClient : LocateRegistry.get(localhost, 4000);
+LindaClient -> LindaServer : registry.lookup("LindaServer");
+LindaServer --> LindaClient
+LindaClient --> Client
+
+end
+
+Client -> Thread1: start()
+
+Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
+
+Thread1 -> LindaClient: res = linda.take(motif)
+
+LindaClient -> LindaRemote: t = linda.take(motif)
+
+LindaRemote -> Linda: t1 = lindacentralized.take(motif)
+
+Client -> Thread2: start()
+
+Thread2 -> Thread2: t2 = new Tuple("hello",15)
+
+Thread2 -> LindaClient: linda.write(t2)
+
+LindaClient -> LindaRemote: linda.write(t2)
+
+LindaRemote -> Linda: lindacentralized.write(t2)
+
+Linda --> LindaRemote
+
+LindaRemote --> LindaClient
+
+LindaClient --> Thread2
+
+Thread2 -> Thread2: t3 = new Tuple(4,"foo")
+
+Thread2 -> LindaClient: linda.write(t3)
+
+LindaClient -> LindaRemote: linda.write(t3)
+
+LindaRemote -> Linda: lindacentralized.write(t3)
+
+Linda --> LindaRemote
+
+LindaRemote --> LindaClient
+
+LindaClient --> Thread2
+
+Linda --> LindaRemote
+
+LindaRemote --> LindaClient
+
+LindaClient --> Thread1
+
+Thread2 --> Client
+Thread1 --> Client
+
+@enduml

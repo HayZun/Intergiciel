@@ -12,7 +12,7 @@ public class LindaServer {
 
 	            //  create LindaObject,
 	            //  register object in naming service
-	            LindaObjectImpl LindaImpl = new LindaObjectImpl();
+	            LindaRemote LindaImpl = new LindaRemote();
 	            registry.bind("LindaServer", LindaImpl);
 
 	            // service ready : awaiting for calls
