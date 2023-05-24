@@ -14,7 +14,7 @@ end box
 
 User -> User: main()
 
-group connexion au serveur
+group Connexion au serveur
 
 User -> Linda: linda = new linda.shm.CentralizedLinda()
 
@@ -29,6 +29,8 @@ group Take d'un tuple type int,String
 Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
 
 Thread1 -> Linda: res = linda.take(motif)
+
+Linda --> Thread1
 
 end
 

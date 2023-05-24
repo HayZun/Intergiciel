@@ -27,6 +27,8 @@ Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
 
 Thread1 -> Linda: eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
 
+Linda --> Thread1
+
 end
 
 note over Linda : motif \nNOT \nFOUND
@@ -41,6 +43,8 @@ Thread2 -> Thread2 : motif = new Tuple(Integer.class, String.class)
 
 Thread2 -> Linda: eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
 
+Linda --> Thread2
+
 end
 
 note over Linda : motif \nNOT \nFOUND
@@ -51,6 +55,8 @@ group Callback en Read
 
 Thread2 -> Linda: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
 
+Linda --> Thread2
+
 end
 
 note over Linda : motif \nNOT \nFOUND
@@ -60,6 +66,8 @@ Linda -> Linda : templateCallbackRead.put\n(motif, callbackT2_read)
 group Write d'un tuple correspondant aux 3 callbacks
 
 Thread2 -> Linda: linda.write(new Tuple(4, "foo"))
+
+Linda --> Thread2
 
 end
 

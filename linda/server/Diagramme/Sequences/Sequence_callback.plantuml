@@ -1,13 +1,18 @@
 @startuml
 
+box "Client" #LightGrey
 actor "Client" as User
 actor Thread1
 actor Thread2
 participant LindaClient
+end box
+box "Serveur" #LightBlue
 actor RMI
 participant LindaServer
 participant LindaRemote
+participant ServerCallback
 participant "LindaCentralized" as Linda
+end box
 
 group Démarrage du serveur RMI
 
@@ -47,9 +52,17 @@ Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
 
 Thread1 -> LindaClient: eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
 
-LindaClient -> LindaRemote: eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
+LindaClient -> LindaRemote : eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
 
-LindaRemote -> Linda:  eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
+LindaRemote -> ServerCallback : c1 = new ServerCallback(callbackT1_take)
+
+activate ServerCallback
+
+ServerCallback --> LindaRemote
+
+LindaRemote -> Linda:  eventRegister(TAKE, IMMEDIATE, motif, c1)
+
+Linda --> LindaRemote
 
 end
 
@@ -67,7 +80,15 @@ Thread2 -> LindaClient: eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
 
 LindaClient -> LindaRemote : eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
 
-LindaRemote -> Linda : eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
+LindaRemote -> ServerCallback : c2 = new ServerCallback(callbackT2_take)
+
+activate ServerCallback
+
+ServerCallback --> LindaRemote
+
+LindaRemote -> Linda : eventRegister(TAKE, IMMEDIATE, motif, c2)
+
+Linda --> LindaRemote
 
 end
 
@@ -81,7 +102,15 @@ Thread2 -> LindaClient: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
 
 LindaClient -> LindaRemote: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
 
-LindaRemote -> Linda: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
+LindaRemote -> ServerCallback : c3 = new ServerCallback(callbackT2_read)
+
+activate ServerCallback
+
+ServerCallback --> LindaRemote
+
+LindaRemote -> Linda: eventRegister(READ, IMMEDIATE, motif, c3)
+
+Linda --> LindaRemote
 
 end
 

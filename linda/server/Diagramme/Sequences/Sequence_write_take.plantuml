@@ -1,13 +1,17 @@
 @startuml
 
+box "Client" #LightGrey
 actor Client
 actor Thread1
 actor Thread2
-actor RMI
 participant LindaClient
+end box
+box "Serveur" #LightBlue
+actor RMI
 participant LindaServer
 participant LindaRemote
 participant "LindaCentralized" as Linda
+end box
 
 group Démarrage du serveur RMI
 
@@ -41,6 +45,8 @@ end
 
 Client -> Thread1: start()
 
+group Take d'un tuple de type int,String
+
 Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
 
 Thread1 -> LindaClient: res = linda.take(motif)
@@ -49,7 +55,25 @@ LindaClient -> LindaRemote: t = linda.take(motif)
 
 LindaRemote -> Linda: t1 = lindacentralized.take(motif)
 
+Linda --> LindaRemote
+
+LindaRemote --> LindaClient
+
+LindaClient --> Thread1
+
+end
+
+Linda -> Linda
+
+activate Thread1 #red
+
+note over Linda : motif \nNOT \nFOUND
+
+note over Thread1 : Action Take\nbloquante
+
 Client -> Thread2: start()
+
+group Write de 2 tuples
 
 Thread2 -> Thread2: t2 = new Tuple("hello",15)
 
@@ -79,13 +103,22 @@ LindaRemote --> LindaClient
 
 LindaClient --> Thread2
 
+end
+
+Thread2 --> Client
+
+note over Linda : motif \nFOUND
+
 Linda --> LindaRemote
 
 LindaRemote --> LindaClient
 
 LindaClient --> Thread1
 
-Thread2 --> Client
+deactivate Thread1
+
 Thread1 --> Client
+
+note over LindaServer #FFAAAA: Le serveur tourne à l'infini\nsans arrêt manuel 
 
 @enduml
