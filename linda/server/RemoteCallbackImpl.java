@@ -22,6 +22,8 @@ public class RemoteCallbackImpl extends UnicastRemoteObject implements RemoteCal
 
 	@Override
 	public void call(Tuple t) {
+		System.out.println("RemoteCallbackImpl call");
 		cb.call(t);
+		System.out.println("RemoteCallbackImpl call end");
     }
 }

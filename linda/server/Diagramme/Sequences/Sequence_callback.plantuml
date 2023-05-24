@@ -1,0 +1,132 @@
+@startuml
+
+actor "Client" as User
+actor Thread1
+actor Thread2
+participant LindaClient
+actor RMI
+participant LindaServer
+participant LindaRemote
+participant "LindaCentralized" as Linda
+
+group Démarrage du serveur RMI
+
+RMI -> LindaServer: Démarre le serveur
+
+activate LindaServer
+
+LindaServer -> LindaServer: createRegistry(4000)
+
+LindaServer -> LindaRemote: Crée LindaRemoteImpl()
+
+LindaRemote --> LindaServer:
+
+LindaServer -> LindaServer: registry.bind("LindaServer", LindaRemoteImpl);
+
+LindaServer --> RMI: Affiche "// system ready //"
+
+end
+
+User -> User: main()
+
+group Connexion du client
+
+User -> LindaClient : new linda.server("//localhost:4000/");
+LindaClient -> LindaClient : LocateRegistry.get(localhost, 4000);
+LindaClient -> LindaServer : registry.lookup("LindaServer");
+LindaServer --> LindaClient
+LindaClient --> User
+
+end
+
+User -> Thread1: start()
+
+group Callback en Take
+
+Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
+
+Thread1 -> LindaClient: eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
+
+LindaClient -> LindaRemote: eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
+
+LindaRemote -> Linda:  eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
+
+end
+
+note over Linda : motif \nNOT \nFOUND
+
+Linda -> Linda : templateCallbackTake.put\n(motif, callbackT1_take)
+
+User -> Thread2: start()
+
+group Callback en Take
+
+Thread2 -> Thread2 : motif = new Tuple(Integer.class, String.class)
+
+Thread2 -> LindaClient: eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
+
+LindaClient -> LindaRemote : eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
+
+LindaRemote -> Linda : eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
+
+end
+
+note over Linda : motif \nNOT \nFOUND
+
+Linda -> Linda : templateCallbackTake.put\n(motif, callbackT2_take)
+
+group Callback en Read
+
+Thread2 -> LindaClient: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
+
+LindaClient -> LindaRemote: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
+
+LindaRemote -> Linda: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
+
+end
+
+note over Linda : motif \nNOT \nFOUND
+
+Linda -> Linda : templateCallbackRead.put\n(motif, callbackT2_read)
+
+group Write d'un tuple correspondant aux 3 callbacks
+
+Thread2 -> LindaClient: linda.write(new Tuple(4, "foo"))
+
+LindaClient -> LindaRemote: linda.write(new Tuple(4, "foo"))
+
+LindaRemote -> Linda : linda.write(new Tuple(4, "foo")) 
+
+Linda --> LindaRemote
+
+LindaRemote --> LindaClient
+
+LindaClient --> Thread2
+
+end
+
+note over Linda : motif \nFOUND
+
+group Rappels des callbacks
+
+Linda -> LindaRemote : templateCallbackRead.get(callbackT2_read).call(Tuple(4, "foo") 
+
+LindaRemote -> LindaClient : templateCallbackRead.get(callbackT2_read).call(Tuple(4, "foo") 
+
+LindaClient -> Thread2
+
+Linda -> LindaRemote : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
+
+Linda -> Linda : templateCallbackRead.remove\n(motif, callbackT2_read)
+
+LindaRemote -> LindaClient : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
+
+LindaClient -> Thread1 : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
+
+Linda -> Linda : templateCallbackTake.remove\n(motif, callbackT1_take)
+
+end
+
+note over Thread2 #FFAAAA: callbackT2_take n'est jamais rappelé
+
+@enduml

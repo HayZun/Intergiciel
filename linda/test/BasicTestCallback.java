@@ -17,6 +17,7 @@ public class BasicTestCallback {
         public void call(Tuple t) {
             System.out.println("CB got "+t);
             linda.eventRegister(eventMode.TAKE, eventTiming.IMMEDIATE, cbmotif, this);
+            System.out.println("CB registered again");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -49,6 +50,8 @@ public class BasicTestCallback {
         linda.write(t3);
 
         linda.debug("(2)");
+
+        System.out.println("fini");
 
     }
 

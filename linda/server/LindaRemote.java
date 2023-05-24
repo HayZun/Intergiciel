@@ -72,9 +72,9 @@ public class LindaRemote extends UnicastRemoteObject implements LindaObject {
 
 	@Override
 	public void eventRegister(eventMode mode, eventTiming timing, Tuple template, RemoteCallback callback) {
-		System.out.println("LindaObjectImpl.eventRegister");
+		System.out.println("LindaRemote eventRegister: start");
 		centralizedLinda.eventRegister(mode, timing, template, new ServerCallback(callback));
-		System.out.println("LindaObjectImpl.eventRegister: done");
+		System.out.println("LiindaRemote eventRegister: end");
 	}
 
 	@Override

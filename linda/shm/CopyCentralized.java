@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /** Shared memory implementation of Linda. */
-public class CentralizedLinda implements Linda {
+public class CopyCentralized implements Linda {
 
     // HashMap de template et de callback pour Take
 private HashMap<Tuple, ArrayList<Callback>> templateCallbackTake;
@@ -47,7 +47,7 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
         this.tuples = tuples;
     }
 
-    public CentralizedLinda() {
+    public CopyCentralized() {
         //init tuples list
         tuples = new ArrayList<Tuple>();
         //init templateCallbackTake
@@ -58,10 +58,8 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
     }
 
     @Override
-    public void write(Tuple t) {
-        synchronized (tuples) {
-            tuples.add(t);
-        }
+    public synchronized void write(Tuple t) {
+        tuples.add(t);
         // create a copy of the tuples list
         List<Tuple> tuplesCopy = new ArrayList<>(tuples);
         // for each tuple in the copy
@@ -70,9 +68,7 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
             // foreach tuples, if matches template and template is a take template remove tuple from tuples list
             for (Tuple template : templateCallbackTake.keySet()) {
                 if (tuple.matches(template) && !take) {
-                    synchronized (tuple) {
-                        tuples.remove(tuple);
-                    }
+                    tuples.remove(tuple);
                     templateCallbackTake.get(template).get(0).call(tuple);
                     if (templateCallbackTake.get(template).size() == 1) {
                         templateCallbackTake.remove(template);
@@ -93,21 +89,17 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
                 }
             }
         });
-        synchronized (this) {
-            notifyAll();
-        }
+        notifyAll();
     }
     
 
-    public Tuple take(Tuple template) {
+    public synchronized Tuple take(Tuple template) {
         // search template in tuples list
         while (true) {
             for (Tuple tuple : tuples) {
                 if (tuple.matches(template)) {
                     // remove tuple from tuples list
-                    synchronized (tuple) {
-                        tuples.remove(tuple);
-                    }
+                    tuples.remove(tuple);
                     // return the tuple
                     return tuple;
                 }
@@ -124,7 +116,7 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
     
 
     @Override
-    public Tuple read(Tuple template) {
+    public synchronized Tuple read(Tuple template) {
         // search template in tuples list
         while (true) {
             for (Tuple tuple : tuples) {
@@ -149,12 +141,11 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
         for (Tuple tuple : tuples) {
             if (tuple.matches(template)) {
                 //remove tuple from tuples list
-                synchronized (tuple) {
-                    tuples.remove(tuple);
-                }
+                tuples.remove(tuple);
                 return tuple;
             }
         }
+
         // if template not found, return null
         return null;
     }
@@ -222,28 +213,28 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
      * @param template the filtering template.
      * @param callback the callback to call if a matching tuple appears.
      */
-    public void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
-        System.out.println("LindaCentralized eventRegister begin");
+    public synchronized void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
+        System.out.println("eventRegister");
         if (timing == eventTiming.IMMEDIATE) {
             Tuple motifTuple = null;
-                if (mode == eventMode.TAKE) {                 
+                if (mode == eventMode.TAKE) {
+                    System.out.println("takeCB");
+                    
                     motifTuple = tryTake(template);
                     if (motifTuple != null) {
                         callback.call(motifTuple);
                     } else {
                         //add tuple and callback to templateCallbackTake
                         ArrayList<Callback> listTake;
-                        synchronized (templateCallbackTake) {
-                            if (templateCallbackTake.get(template) != null) {
-                                listTake = templateCallbackTake.get(template);
-                                listTake.add(callback);
-                                templateCallbackTake.remove(template);
-                            } else {
-                                listTake = new ArrayList<Callback>();
-                                listTake.add(callback);
-                            }
-                            templateCallbackTake.put(template, listTake);
+                        if (templateCallbackTake.get(template) != null) {
+                            listTake = templateCallbackTake.get(template);
+                            listTake.add(callback);
+                            templateCallbackTake.remove(template);
+                        } else {
+                            listTake = new ArrayList<Callback>();
+                            listTake.add(callback);
                         }
+                        templateCallbackTake.put(template, listTake);
                     }
                 } else {
                     motifTuple = tryRead(template);
@@ -252,52 +243,45 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
                     } else {
                         //add tuple and callback to templateCallbackRead
                         ArrayList<Callback> listRead;
-                        //
-                        synchronized (templateCallbackRead) {
-                            if (templateCallbackRead.get(template) != null) {
-                                listRead = templateCallbackRead.get(template);
-                                listRead.add(callback);
-                                templateCallbackRead.remove(template);
-                                
-                            } else {
-                                listRead = new ArrayList<Callback>();
-                                listRead.add(callback);
-                            }
-                            templateCallbackRead.put(template, listRead);
+                        // 
+                        if (templateCallbackRead.get(template) != null) {
+                            listRead = templateCallbackRead.get(template);
+                            listRead.add(callback);
+                            templateCallbackRead.remove(template);
+                            
+                        } else {
+                            listRead = new ArrayList<Callback>();
+                            listRead.add(callback);
                         }
+                        templateCallbackRead.put(template, listRead);
                     }
                 }                               
         } else {
             // if timing is future, current tuples are ignored.
             if (mode == eventMode.TAKE) {
                 ArrayList<Callback> listTake;
-                synchronized (templateCallbackTake) {
-                    if (templateCallbackTake.get(template) != null) {
-                        listTake = templateCallbackTake.get(template);
-                        listTake.add(callback);
-                        templateCallbackTake.remove(template);
-                    } else {
-                        listTake = new ArrayList<Callback>();
-                        listTake.add(callback);
-                    }
-                    templateCallbackTake.put(template, listTake);
+                if (templateCallbackTake.get(template) != null) {
+                    listTake = templateCallbackTake.get(template);
+                    listTake.add(callback);
+                    templateCallbackTake.remove(template);
+                } else {
+                    listTake = new ArrayList<Callback>();
+                    listTake.add(callback);
                 }
+                templateCallbackTake.put(template, listTake);
             } else {
                 ArrayList<Callback> listRead;
-                synchronized (templateCallbackRead) {
-                    if (templateCallbackRead.get(template) != null) {
-                        listRead = templateCallbackRead.get(template);
-                        listRead.add(callback);
-                        templateCallbackRead.remove(template);
-                    } else {
-                        listRead = new ArrayList<Callback>();
-                        listRead.add(callback);
-                    }
-                    templateCallbackRead.put(template, listRead);
-                }
+                        if (templateCallbackRead.get(template) != null) {
+                            listRead = templateCallbackRead.get(template);
+                            listRead.add(callback);
+                            templateCallbackRead.remove(template);
+                        } else {
+                            listRead = new ArrayList<Callback>();
+                            listRead.add(callback);
+                        }
+                        templateCallbackRead.put(template, listRead);
             }
          }
-         System.out.println("LindaCentralized eventRegister end");
     }
 
     @Override
