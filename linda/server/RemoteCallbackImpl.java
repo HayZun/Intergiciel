@@ -10,7 +10,7 @@ public class RemoteCallbackImpl extends UnicastRemoteObject implements RemoteCal
 
 	/**
 	 * 
-	 */
+	 */ 
 	private static final long serialVersionUID = 6327294100662954220L;
 	private Callback cb;
 	

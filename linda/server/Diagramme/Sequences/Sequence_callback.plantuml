@@ -5,6 +5,7 @@ actor "Client" as User
 actor Thread1
 actor Thread2
 participant LindaClient
+participant LindaRemoteImpl
 end box
 box "Serveur" #LightBlue
 actor RMI
