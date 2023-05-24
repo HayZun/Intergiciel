@@ -121,6 +121,7 @@ public class LindaClient implements Linda {
 		try {
 			RemoteCallback cb = new RemoteCallbackImpl(callback);
 			linda.eventRegister(mode, timing, template, cb);
+			System.out.println("Event registered");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

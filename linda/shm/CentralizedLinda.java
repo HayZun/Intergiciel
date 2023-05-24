@@ -213,7 +213,7 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
      * @param template the filtering template.
      * @param callback the callback to call if a matching tuple appears.
      */
-    public synchronized void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
+    public void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
         System.out.println("eventRegister");
         if (timing == eventTiming.IMMEDIATE) {
             Tuple motifTuple = null;

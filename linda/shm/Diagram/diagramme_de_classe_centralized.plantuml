@@ -1,0 +1,54 @@
+@startuml
+
+class Linda {
+    + write(t: Tuple)
+    + take(t: Tuple): Tuple
+    + read(t: Tuple): Tuple
+    + tryTake(t: Tuple): Tuple
+    + tryRead(t: Tuple): Tuple
+    + takeAll(t: Tuple): Collection<Tuple>
+    + readAll(t: Tuple): Collection<Tuple>
+    + eventRegister(mode: eventMode, timing: eventTiming, t: Tuple, cb: Callback)
+    + debug(prefix: String)
+}
+
+class CentralizedLinda {
+    - templateCallbackTake: HashMap<Tuple, ArrayList<Callback>>
+    - templateCallbackRead: HashMap<Tuple, ArrayList<Callback>>
+    - tuples: ArrayList<Tuple>
+    + write(t: Tuple): void
+    + take(t: Tuple): Tuple
+    + read(t: Tuple): Tuple
+    + tryTake(t: Tuple): Tuple
+    + tryRead(t: Tuple): Tuple
+    + takeAll(t: Tuple): Collection<Tuple>
+    + readAll(t: Tuple): Collection<Tuple>
+    + eventRegister(mode: eventMode, timing: eventTiming, t: Tuple, cb: Callback): void
+    + debug(prefix: String): void
+    + plus_getters_et_setters() : type/void
+}
+
+class Tuple {
+   // attributes and methods of Tuple class
+}
+
+class Callback {
+    // attributes and methods of Callback class
+}
+
+enum eventMode {
+    READ
+    TAKE
+}
+
+enum eventTiming {
+    IMMEDIATE
+    FUTURE
+}
+
+Linda "uses" -> "1" CentralizedLinda : Implements
+
+CentralizedLinda "1" --> "0..*" Tuple
+CentralizedLinda "1" --> "0..*" Callback
+
+@enduml

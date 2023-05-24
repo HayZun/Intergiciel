@@ -1,0 +1,46 @@
+@startuml
+
+actor User
+participant Thread1
+participant Thread2
+participant "CentralizedLinda" as Linda
+
+User -> User: main()
+
+User -> Linda: linda = new linda.shm.CentralizedLinda()
+
+Linda --> User
+
+User -> Thread1: start()
+
+Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
+
+Thread1 -> Linda: eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
+
+Linda -> Linda : motif NOT FOUND \ntemplateCallbackTake.put(motif, callbackT1_take)
+
+User -> Thread2: start()
+
+Thread2 -> Thread2 : motif = new Tuple(Integer.class, String.class)
+
+Thread2 -> Linda: eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
+
+Linda -> Linda : motif NOT FOUND \ntemplateCallbackTake.put(motif, callbackT2_take)
+
+Thread2 -> Linda: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
+
+Linda -> Linda : motif NOT FOUND \ntemplateCallbackRead.put(motif, callbackT2_read)
+
+Thread2 -> Linda: linda.write(new Tuple(4, "foo"))
+
+Linda -> Linda : motif FOUND
+
+Linda -> Thread2 : templateCallbackRead.get(callbackT2_read).call(Tuple(4, "foo") 
+
+Linda -> Linda : templateCallbackRead.remove(motif, callbackT2_read)
+
+Linda -> Thread1 : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
+
+Linda -> Linda : templateCallbackTake.remove(motif, callbackT1_take)
+
+@enduml
