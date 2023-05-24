@@ -223,7 +223,7 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
      * @param callback the callback to call if a matching tuple appears.
      */
     public void eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback) {
-        System.out.println("LindaCentralized eventRegister begin");
+        //System.out.println("LindaCentralized eventRegister begin");
         if (timing == eventTiming.IMMEDIATE) {
             Tuple motifTuple = null;
                 if (mode == eventMode.TAKE) {                 
@@ -297,7 +297,7 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
                 }
             }
          }
-         System.out.println("LindaCentralized eventRegister end");
+         //System.out.println("LindaCentralized eventRegister end");
     }
 
     @Override

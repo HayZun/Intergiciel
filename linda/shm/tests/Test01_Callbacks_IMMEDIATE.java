@@ -45,6 +45,7 @@ public class Test01_Callbacks_IMMEDIATE {
             System.out.println("Le score souhaité était de : " + attendu + "/3 callbacks réussis.");
             String test = num_test + "";
             tests_echoues.add(test);
+            nb_echoues += 1;
         }
         System.out.println("        FIN TEST " + num_test);
         System.out.println("---------------------------------");

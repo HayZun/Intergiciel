@@ -7,7 +7,7 @@ import linda.Tuple;
 import linda.Linda.eventMode;
 import linda.Linda.eventTiming;
 
-public class Test02_Callback_et_write {
+public class Test00_Callback_unique {
 
     private static Tuple cbmotif;
     private static int nb_callbacks = 0;
@@ -32,30 +32,14 @@ public class Test02_Callback_et_write {
         }
     }
 
-    static void fin_test(){
-        if (nb_callbacks == 1){
-            System.out.println("Test réussi : 1/1 callbacks réussis comme prévu. ");
-        } else {
-            System.out.println("Test échoué : 0/1 callbacks réussis.");
-            System.out.println("Le score souhaité était de 1/1 callbacks réussis.");
-        }
-        System.out.println("        FIN TEST ");
-        System.out.println("---------------------------------");
-        System.out.println();
-    }
-
     public static void main(String[] a) throws Exception {
         cbmotif = new Tuple(Integer.class, String.class);
 
         System.out.println("        DEBUT TEST 01 : Callback unique");
         final Linda linda = new linda.server.LindaClient("//localhost:4000/");
-        linda.debug("(2)");
-        linda.write(new Tuple(4, "foo"));
-        linda.debug("(2)");
         System.out.println("Test eventregister begin");
         linda.eventRegister(eventMode.TAKE, eventTiming.IMMEDIATE, cbmotif, new MyCallback());
         System.out.println("Test eventregister end");
-        
-        fin_test();
+        System.out.println("Résultat attendu : Le test tourne à l'infini");
     }
 }
