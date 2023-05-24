@@ -5,7 +5,7 @@ actor "Client" as User
 actor Thread1
 actor Thread2
 participant LindaClient
-participant LindaRemoteImpl
+participant RemoteCallbackImpl
 end box
 box "Serveur" #LightBlue
 actor RMI
@@ -53,17 +53,27 @@ Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
 
 Thread1 -> LindaClient: eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
 
-LindaClient -> LindaRemote : eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
+LindaClient -> RemoteCallbackImpl : C1 = new RemoteCallbackImpl(callbackT1_take);
 
-LindaRemote -> ServerCallback : c1 = new ServerCallback(callbackT1_take)
+activate RemoteCallbackImpl
+
+RemoteCallbackImpl --> LindaClient
+
+LindaClient -> LindaRemote : eventRegister(TAKE, IMMEDIATE, motif, C1)
+
+LindaRemote -> ServerCallback : c1 = new ServerCallback(C1)
 
 activate ServerCallback
 
-ServerCallback --> LindaRemote
+ServerCallback --> RemoteCallbackImpl : c1 
 
 LindaRemote -> Linda:  eventRegister(TAKE, IMMEDIATE, motif, c1)
 
 Linda --> LindaRemote
+
+LindaRemote --> LindaClient
+
+LindaClient --> Thread1
 
 end
 
@@ -79,7 +89,13 @@ Thread2 -> Thread2 : motif = new Tuple(Integer.class, String.class)
 
 Thread2 -> LindaClient: eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
 
-LindaClient -> LindaRemote : eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
+LindaClient -> RemoteCallbackImpl : C2 = new RemoteCallbackImpl(callbackT2_take);
+
+activate RemoteCallbackImpl
+
+RemoteCallbackImpl --> LindaClient
+
+LindaClient -> LindaRemote : eventRegister(TAKE, IMMEDIATE, motif, C2)
 
 LindaRemote -> ServerCallback : c2 = new ServerCallback(callbackT2_take)
 
@@ -105,7 +121,13 @@ group Callback en Read
 
 Thread2 -> LindaClient: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
 
-LindaClient -> LindaRemote: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
+LindaClient -> RemoteCallbackImpl : C3 = new RemoteCallbackImpl(callbackT2_read);
+
+activate RemoteCallbackImpl
+
+RemoteCallbackImpl --> LindaClient
+
+LindaClient -> LindaRemote: eventRegister(READ, IMMEDIATE, motif, C3)
 
 LindaRemote -> ServerCallback : c3 = new ServerCallback(callbackT2_read)
 
@@ -116,6 +138,10 @@ ServerCallback --> LindaRemote
 LindaRemote -> Linda: eventRegister(READ, IMMEDIATE, motif, c3)
 
 Linda --> LindaRemote
+
+LindaRemote --> LindaClient
+
+LindaClient --> Thread2
 
 end
 
@@ -143,24 +169,36 @@ note over Linda : motif \nFOUND
 
 group Rappels des callbacks
 
-Linda -> LindaRemote : templateCallbackRead.get(callbackT2_read).call(Tuple(4, "foo") 
-
-LindaRemote -> LindaClient : templateCallbackRead.get(callbackT2_read).call(Tuple(4, "foo") 
-
-LindaClient -> Thread2
-
-Linda -> LindaRemote : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
+Linda -> ServerCallback : templateCallbackRead.get(callbackT2_read).call(Tuple(4, "foo") 
 
 Linda -> Linda : templateCallbackRead.remove\n(motif, callbackT2_read)
 
-LindaRemote -> LindaClient : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
+deactivate ServerCallback
 
-LindaClient -> Thread1 : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
+ServerCallback -> RemoteCallbackImpl : c3.call(Tuple(4, "foo") 
+
+deactivate RemoteCallbackImpl
+
+RemoteCallbackImpl -> Thread2 : callbackT2_read.call(Tuple(4, "foo")
+
+Linda -> ServerCallback : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
 
 Linda -> Linda : templateCallbackTake.remove\n(motif, callbackT1_take)
 
+deactivate ServerCallback
+
+ServerCallback -> RemoteCallbackImpl : c1.call(Tuple(4, "foo")
+
+deactivate RemoteCallbackImpl
+
+RemoteCallbackImpl --> Thread1 : callbackT1_take.call(Tuple(4, "foo")
+
 end
 
+Thread1 --> User
+
 note over Thread2 #FFAAAA: callbackT2_take n'est jamais rappelé
+
+note over RemoteCallbackImpl #FFAAAA: Tourne à l'infini\ncar un callback est toujours\nen attente
 
 @enduml
