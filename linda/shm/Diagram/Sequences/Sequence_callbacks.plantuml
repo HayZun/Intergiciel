@@ -1,46 +1,82 @@
 @startuml
 
+box "Client" #LightGrey
 actor User
-participant Thread1
-participant Thread2
+actor Thread1
+actor Thread2
+end box
+box "Serveur" #LightBlue
 participant "CentralizedLinda" as Linda
+end box
 
 User -> User: main()
+
+group connexion au serveur
 
 User -> Linda: linda = new linda.shm.CentralizedLinda()
 
 Linda --> User
 
+end
+
 User -> Thread1: start()
+
+group Callback en Take
 
 Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
 
 Thread1 -> Linda: eventRegister(TAKE, IMMEDIATE, motif, callbackT1_take)
 
-Linda -> Linda : motif NOT FOUND \ntemplateCallbackTake.put(motif, callbackT1_take)
+end
+
+note over Linda : motif \nNOT \nFOUND
+
+Linda -> Linda : templateCallbackTake.put\n(motif, callbackT1_take)
 
 User -> Thread2: start()
+
+group Callback en Take
 
 Thread2 -> Thread2 : motif = new Tuple(Integer.class, String.class)
 
 Thread2 -> Linda: eventRegister(TAKE, IMMEDIATE, motif, callbackT2_take)
 
-Linda -> Linda : motif NOT FOUND \ntemplateCallbackTake.put(motif, callbackT2_take)
+end
+
+note over Linda : motif \nNOT \nFOUND
+
+Linda -> Linda : templateCallbackTake.put\n(motif, callbackT2_take)
+
+group Callback en Read
 
 Thread2 -> Linda: eventRegister(READ, IMMEDIATE, motif, callbackT2_read)
 
-Linda -> Linda : motif NOT FOUND \ntemplateCallbackRead.put(motif, callbackT2_read)
+end
+
+note over Linda : motif \nNOT \nFOUND
+
+Linda -> Linda : templateCallbackRead.put\n(motif, callbackT2_read)
+
+group Write d'un tuple correspondant aux 3 callbacks
 
 Thread2 -> Linda: linda.write(new Tuple(4, "foo"))
 
-Linda -> Linda : motif FOUND
+end
+
+note over Linda : motif \nFOUND
+
+group Rappels des callbacks
 
 Linda -> Thread2 : templateCallbackRead.get(callbackT2_read).call(Tuple(4, "foo") 
 
-Linda -> Linda : templateCallbackRead.remove(motif, callbackT2_read)
+Linda -> Linda : templateCallbackRead.remove\n(motif, callbackT2_read)
 
 Linda -> Thread1 : templateCallbackTake.get(callbackT1_take).call(Tuple(4, "foo")
 
-Linda -> Linda : templateCallbackTake.remove(motif, callbackT1_take)
+Linda -> Linda : templateCallbackTake.remove\n(motif, callbackT1_take)
+
+end
+
+note over Thread2 #FFAAAA: callbackT2_take n'est jamais rappelé
 
 @enduml

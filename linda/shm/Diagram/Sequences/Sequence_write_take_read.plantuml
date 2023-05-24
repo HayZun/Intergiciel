@@ -1,27 +1,46 @@
 @startuml
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+!pragma teoz true
 
+box "Client" #LightGrey
 actor User
-participant Thread1
-participant Thread2
+actor Thread1
+actor Thread2
+end box
+box "Serveur" #LightBlue
 participant "CentralizedLinda" as Linda
+end box
 
 User -> User: main()
+
+group connexion au serveur
 
 User -> Linda: linda = new linda.shm.CentralizedLinda()
 
 Linda --> User
 
+end
+
 User -> Thread1: start()
+
+group Take d'un tuple type int,String
 
 Thread1 -> Thread1 : motif = new Tuple(Integer.class, String.class)
 
 Thread1 -> Linda: res = linda.take(motif)
 
+end
+
 activate Thread1 #red
 
-Linda -> Linda : motif NOT FOUND
+note over Linda : motif \nNOT \nFOUND
+
+note over Thread1 : Action Take\nbloquante
 
 User -> Thread2: start()
+
+group Write de 2 tuples
 
 Thread2 -> Thread2: t2 = new Tuple("hello", 15)
 
@@ -35,7 +54,9 @@ Thread2 -> Linda: linda.write(t3)
 
 Linda --> Thread2
 
-Linda -> Linda : motif found
+end
+
+note over Linda : motif \nFOUND
 
 Thread2 --> User
 
