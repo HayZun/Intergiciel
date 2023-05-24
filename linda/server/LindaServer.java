@@ -18,7 +18,7 @@ public class LindaServer {
 	            // service ready : awaiting for calls
 	            System.out.println ("// system ready //");
 	        } catch (java.rmi.server.ExportException e) {
-	            System.out.println("A registry is already running, proceeding...");
+	            //System.out.println("A registry is already running, proceeding...");
 	        }
 	    }
 }

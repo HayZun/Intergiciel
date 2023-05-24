@@ -1,0 +1,481 @@
+        DEBUT TEST 01 : rrrw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) [[ 4 "foo" ]]
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 1
+---------------------------------
+
+NETTOYAGE DEBUT
+NETTOYAGE FIN
+
+        DEBUT TEST 02 : wrrr
+(2) [[ 4 "foo" ]]
+Test réussi : 0/3 callbacks réussis comme prévu. 
+        FIN TEST 2
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 03 : rwrr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) [[ 4 "foo" ]]
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 3
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 04 : rrwr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) [[ 4 "foo" ]]
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 4
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 05 : trrw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 5
+---------------------------------
+
+NETTOYAGE DEBUT
+NETTOYAGE FIN
+
+        DEBUT TEST 06 : wtrr
+(2) [[ 4 "foo" ]]
+Test réussi : 0/3 callbacks réussis comme prévu. 
+        FIN TEST 6
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 07 : twrr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 7
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 08 : trwr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 8
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 09 : rtrw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 9
+---------------------------------
+
+NETTOYAGE DEBUT
+NETTOYAGE FIN
+
+        DEBUT TEST 10 : wrtr
+(2) [[ 4 "foo" ]]
+Test réussi : 0/3 callbacks réussis comme prévu. 
+        FIN TEST 10
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 11 : rwtr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) [[ 4 "foo" ]]
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 11
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 12 : rtwr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 12
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 13 : rrtw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+(2) []
+Test réussi : 3/3 callbacks réussis comme prévu. 
+        FIN TEST 13
+---------------------------------
+
+NETTOYAGE DEBUT
+NETTOYAGE FIN
+
+        DEBUT TEST 14 : wrrt
+(2) [[ 4 "foo" ]]
+Test réussi : 0/3 callbacks réussis comme prévu. 
+        FIN TEST 14
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 15 : rwrt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) [[ 4 "foo" ]]
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 15
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 16 : rrwt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) [[ 4 "foo" ]]
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 16
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 17 : rttw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 17
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 18 : wrtt
+(2) [[ 4 "foo" ]]
+Test réussi : 0/3 callbacks réussis comme prévu. 
+        FIN TEST 18
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 19 : rwtt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) [[ 4 "foo" ]]
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 19
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 20 : rtwt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 20
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 21 : trtw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 21
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 22 : wtrt
+(2) [[ 4 "foo" ]]
+Test réussi : 0/3 callbacks réussis comme prévu. 
+        FIN TEST 22
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 23 : twrt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 23
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 24 : trwt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 24
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 25 : ttrw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+(2) []
+Test réussi : 2/3 callbacks réussis comme prévu. 
+        FIN TEST 25
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 26 : wttr
+(2) [[ 4 "foo" ]]
+Test réussi : 0/3 callbacks réussis comme prévu. 
+        FIN TEST 26
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 27 : twtr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 27
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 28 : ttwr
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 28
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 29 : tttw
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 29
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 30 : wttt
+(2) [[ 4 "foo" ]]
+Test réussi : 0/3 callbacks réussis comme prévu. 
+        FIN TEST 30
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 31 : twtt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 31
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+        DEBUT TEST 32 : ttwt
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 1
+(2) []
+Test réussi : 1/3 callbacks réussis comme prévu. 
+        FIN TEST 32
+---------------------------------
+
+NETTOYAGE DEBUT
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 2
+CB got [ 4 "foo" ]
+CB done with [ 4 "foo" ] | Nombres callbacks réussis : 3
+NETTOYAGE FIN
+
+Nombre de tests réussis : 32/32

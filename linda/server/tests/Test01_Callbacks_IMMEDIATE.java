@@ -64,11 +64,14 @@ public class Test01_Callbacks_IMMEDIATE {
 
     static void remise_zero(Linda linda){
         //
+        System.out.println("NETTOYAGE DEBUT");
         linda.write(new Tuple(4, "foo"));
         linda.write(new Tuple(4, "foo"));
         linda.write(new Tuple(4, "foo"));
         linda.takeAll(cbmotif);
         reset_callbacks();
+        System.out.println("NETTOYAGE FIN");
+        System.out.println();
         //
     }
 
