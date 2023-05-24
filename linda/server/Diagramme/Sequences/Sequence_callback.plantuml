@@ -90,6 +90,10 @@ LindaRemote -> Linda : eventRegister(TAKE, IMMEDIATE, motif, c2)
 
 Linda --> LindaRemote
 
+LindaRemote --> LindaClient
+
+LindaClient --> Thread2
+
 end
 
 note over Linda : motif \nNOT \nFOUND
