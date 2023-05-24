@@ -130,6 +130,7 @@ public void setTemplateCallbackTake(HashMap<Tuple, ArrayList<Callback>> template
             for (Tuple tuple : tuples) {
                 if (tuple.matches(template)) {
                     // return the tuple
+                    System.out.println("Match read");
                     return tuple;
                 }
             }
