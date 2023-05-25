@@ -1,0 +1,110 @@
+@startuml
+
+package Client {
+    class LindaClient {
+        + LindaObject linda
+        + LindaClient(String serverURI)
+        + write(Tuple t)
+        + take(Tuple template): Tuple
+        + read(Tuple template): Tuple
+        + tryTake(Tuple template): Tuple
+        + tryRead(Tuple template): Tuple
+        + takeAll(Tuple template): Collection<Tuple>
+        + readAll(Tuple template): Collection<Tuple>
+        + eventRegister(eventMode mode, eventTiming timing, Tuple template, Callback callback)
+        + debug(String prefix)
+        - getHost(String uri): String
+        - getPort(String uri): String
+    }
+
+class RemoteCallbackImpl {
+  - serialVersionUID: long
+  - cb: Callback
+  + RemoteCallbackImpl(callback: Callback)
+  + call(t: Tuple): void
+}
+
+}
+
+interface RemoteCallback {
+        + call(Tuple t)
+    }
+
+RemoteCallback <|.. RemoteCallbackImpl
+
+
+package linda {
+  class Tuple {
+  }
+  interface Linda {
+  }
+  interface Callback {
+  }
+}
+
+package linda.shm {
+
+  class CentralizedLinda {
+  }
+
+}
+
+package Server {
+    class ServerCallback {
+        - RemoteCallback callback
+        + ServerCallback(RemoteCallback cb)
+        + call(Tuple t)
+    }
+
+    class LindaRemote {
+        - CentralizedLinda centralizedLinda
+        + LindaRemote()
+        + write(Tuple t)
+        + take(Tuple template): Tuple
+        + read(Tuple template): Tuple
+        + tryTake(Tuple template): Tuple
+        + tryRead(Tuple template): Tuple
+        + takeAll(Tuple template): Collection<Tuple>
+        + readAll(Tuple template): Collection<Tuple>
+        + eventRegister(eventMode mode, eventTiming timing, Tuple template, RemoteCallback callback)
+        + debug(String prefix)
+        + getTuples(): ArrayList<Tuple>
+    }
+
+
+    class ServerCallback {
+        - RemoteCallback callback
+        + ServerCallback(RemoteCallback cb)
+        + call(Tuple t)
+    }
+
+    interface LindaObject {
+        + write(Tuple t)
+        + take(Tuple template): Tuple
+        + read(Tuple template): Tuple
+        + tryTake(Tuple template): Tuple
+        + tryRead(Tuple template): Tuple
+        + takeAll(Tuple template): Collection<Tuple>
+        + readAll(Tuple template): Collection<Tuple>
+        + eventRegister(eventMode mode, eventTiming timing, Tuple template, RemoteCallback callback)
+        + debug(String prefix)
+        + getTuples(): ArrayList<Tuple>
+    }
+    class LindaServer {
+        + main(String[] args)
+    }
+  
+  CentralizedLinda <|.. LindaRemote
+
+  LindaClient --> RemoteCallbackImpl
+  LindaClient ---- LindaServer
+  LindaRemote --> ServerCallback
+}
+
+Callback <|.. ServerCallback
+Linda <|.. LindaClient
+Linda <|.. CentralizedLinda
+CentralizedLinda "1" *-- "0..*" Tuple
+LindaClient "1" -- "1" LindaObject
+LindaRemote "1" -- "1" LindaObject
+@enduml
