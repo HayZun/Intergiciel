@@ -30,7 +30,7 @@ interface RemoteCallback {
         + call(Tuple t)
     }
 
-RemoteCallback <|.. RemoteCallbackImpl
+RemoteCallback <|-- RemoteCallbackImpl
 
 
 package linda {
@@ -101,10 +101,10 @@ package Server {
   LindaRemote --> ServerCallback
 }
 
-Callback <|.. ServerCallback
-Linda <|.. LindaClient
-Linda <|.. CentralizedLinda
+Callback <|-- ServerCallback
+Linda <|-- LindaClient
+Linda <|-- CentralizedLinda
+LindaObject <|-- LindaRemote
 CentralizedLinda "1" *-- "0..*" Tuple
-LindaClient "1" -- "1" LindaObject
-LindaRemote "1" -- "1" LindaObject
+LindaRemote <- LindaServer
 @enduml
